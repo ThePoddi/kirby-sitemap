@@ -1,0 +1,8 @@
+{
+  "name": "kirby-sitemap",
+  "description": "sitemap.xml for Kirby Websites.",
+  "author": "Patrick Schumacher <hello@thepoddi.com>",
+  "version": "1.0.0",
+  "type": "kirby-plugin",
+  "license": "MIT"
+}
