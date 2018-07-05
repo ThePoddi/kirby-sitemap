@@ -46,6 +46,12 @@ Set high priority pages by intended template. (array) *Default: home*
 c::set( 'sitemap.important.templates', array('home') );
 ```
 
+### Include Image Sitemap
+Include image tags in sitemap [Google Image Sitemaps](https://support.google.com/webmasters/answer/178636). (boolean) *Default: true*
+```
+c::set( 'sitemap.include.images', true );
+```
+
 ## Authors
 
 **Patrick Schumacher** - [GitHub](https://github.com/thepoddi) [Website](https://www.thepoddi.com)
