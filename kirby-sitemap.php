@@ -3,7 +3,7 @@
  * -------------------------------------------------------------------
  * Plugin Name: Sitemap
  * Description: sitemap.xml for Kirby Websites.
- * @version    1.0.0
+ * @version    1.1.0
  * @author     Patrick Schumacher <hello@thepoddi.com>
  * @link       https://github.com/ThePoddi/kirby-sitemap
  * @license    MIT
@@ -15,6 +15,7 @@ $ignoreTemplates        = c::get( 'sitemap.ignore.templates', array('error') );
 $ignoreInvisible        = c::get( 'sitemap.ignore.invisible', true );
 $importantPages         = c::get( 'sitemap.important.pages', array('home') );
 $importantTemplates     = c::get( 'sitemap.important.templates', array('home') );
+$includeImages          = c::get( 'sitemap.include.images', true );
 
 
 // SITEMAP.xml
@@ -24,11 +25,11 @@ kirby()->routes(
     array(
       'pattern' => 'sitemap.xml',
       'method'  => 'GET',
-      'action'  => function() use ( $ignorePages, $ignoreTemplates, $ignoreInvisible, $importantPages, $importantTemplates ) {
+      'action'  => function() use ( $ignorePages, $ignoreTemplates, $ignoreInvisible, $importantPages, $importantTemplates, $includeImages ) {
 
         // xml doctype
         $sitemap  = '<?xml version="1.0" encoding="utf-8"?>';
-        $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">';
+        $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" ' . ( r( $includeImages === true, 'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' ) ) . '>';
 
         // loop all pages
         foreach( site()->index() as $p ) :
@@ -49,6 +50,19 @@ kirby()->routes(
           if ( site()->languages()->count() > 0 ) :
             foreach( site()->languages() as $language ):
               $sitemap .= '<xhtml:link rel="alternate" hreflang="' . $language->code() . '" href="' . $p->url($language->code()) . '" />';
+            endforeach;
+          endif;
+
+          // set image tags
+          if ( $p->hasImages() && $includeImages === true ) :
+            foreach( $p->images()->limit(1000) as $image ):
+              $sitemap .= '<image:image>';
+                $sitemap .= '<image:loc>' . $image->url() . '</image:loc>';
+                $sitemap .= r( $image->image_caption()->isNotEmpty(), '<image:caption>' . $image->image_caption()->xml() . '</image:caption>' );
+                $sitemap .= r( $image->image_title()->isNotEmpty(), '<image:title>' . $image->image_title()->xml() . '</image:title>' );
+                $sitemap .= r( $image->image_geo_location()->isNotEmpty(), '<image:geo_location>' . $image->image_geo_location()->xml() . '</image:geo_location>' );
+                $sitemap .= r( $image->image_licence()->isNotEmpty(), '<image:licence>' . $image->image_licence()->xml() . '</image:licence>' );
+              $sitemap .= '</image:image>';
             endforeach;
           endif;
 
