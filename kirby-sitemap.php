@@ -47,7 +47,7 @@ kirby()->routes(
           $sitemap .= '<loc>' . $p->url() . '</loc>';
 
           // set multilanguage canonicals
-          if ( site()->languages()->count() > 0 ) :
+          if ( site()->languages() && site()->languages()->count() > 0 ) :
             foreach( site()->languages() as $language ):
               $sitemap .= '<xhtml:link rel="alternate" hreflang="' . $language->code() . '" href="' . $p->url($language->code()) . '" />';
             endforeach;
