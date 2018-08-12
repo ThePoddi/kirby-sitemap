@@ -3,7 +3,7 @@
  * -------------------------------------------------------------------
  * Plugin Name: Sitemap
  * Description: sitemap.xml for Kirby Websites.
- * @version    1.1.1
+ * @version    1.1.2
  * @author     Patrick Schumacher <hello@thepoddi.com>
  * @link       https://github.com/ThePoddi/kirby-sitemap
  * @license    MIT
@@ -27,6 +27,9 @@ kirby()->routes(
       'method'  => 'GET',
       'action'  => function() use ( $ignorePages, $ignoreTemplates, $ignoreInvisible, $importantPages, $importantTemplates, $includeImages ) {
 
+        // get languages
+        $languages = site()->languages();
+
         // xml doctype
         $sitemap  = '<?xml version="1.0" encoding="utf-8"?>';
         $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" ' . ( r( $includeImages === true, 'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' ) ) . '>';
@@ -47,8 +50,8 @@ kirby()->routes(
           $sitemap .= '<loc>' . $p->url() . '</loc>';
 
           // set multilanguage canonicals
-          if ( site()->languages() && site()->languages()->count() > 0 ) :
-            foreach( site()->languages() as $language ):
+          if ( $languages && $languages->count() > 0 ) :
+            foreach( $languages as $language ):
               $sitemap .= '<xhtml:link rel="alternate" hreflang="' . $language->code() . '" href="' . $p->url($language->code()) . '" />';
             endforeach;
           endif;
