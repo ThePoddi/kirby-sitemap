@@ -20,7 +20,7 @@ This plugin sets a sitemap to `/sitemap.xml` as a kirby route. There is no actua
 The sitemap can be configured via Kirby’s config file `/site/config/config.php`.
 
 ### Ignore Pages
-Ignore pages by uid. (array) *Default: error*
+Ignore pages by URI - example: 'blog/my-article'. (array) *Default: error*
 ```
 c::set( 'sitemap.ignore.pages', array('error') );
 ```
