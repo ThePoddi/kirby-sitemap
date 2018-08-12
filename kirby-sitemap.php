@@ -3,7 +3,7 @@
  * -------------------------------------------------------------------
  * Plugin Name: Sitemap
  * Description: sitemap.xml for Kirby Websites.
- * @version    1.1.0
+ * @version    1.1.1
  * @author     Patrick Schumacher <hello@thepoddi.com>
  * @link       https://github.com/ThePoddi/kirby-sitemap
  * @license    MIT
