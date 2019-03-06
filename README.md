@@ -1,6 +1,9 @@
-# Kirby Plugin: Sitemap
+# Kirby 2 Plugin: Sitemap
 
-sitemap.xml for kirby websites.
+sitemap.xml for Kirby 2 websites.
+
+> For **Kirby 3** you can use this SEO Kit: [Kirby 3 SEO Kit](https://github.com/ThePoddi/kirby3-seokit) 
+
 
 ## Installation
 
